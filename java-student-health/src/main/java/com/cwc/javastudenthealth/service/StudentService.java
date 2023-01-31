@@ -1,7 +1,9 @@
 package com.cwc.javastudenthealth.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cwc.javastudenthealth.entity.Student;
+import com.cwc.javastudenthealth.entity.vo.StudentVO;
 
 public interface StudentService {
     /**
@@ -18,7 +20,7 @@ public interface StudentService {
      * @param student
      * @return
      */
-    Page<Student> getStudents(int pageNum, int pageSize, Student student);
+    IPage<StudentVO> getStudents(int pageNum, int pageSize, Student student);
 
     /**
      * 更新学生

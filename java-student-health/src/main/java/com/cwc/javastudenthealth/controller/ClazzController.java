@@ -1,6 +1,7 @@
 package com.cwc.javastudenthealth.controller;
 
 import com.cwc.javastudenthealth.entity.Clazz;
+import com.cwc.javastudenthealth.handler.Authorization;
 import com.cwc.javastudenthealth.service.ClazzService;
 import com.cwc.javastudenthealth.util.Result;
 import com.cwc.javastudenthealth.util.ResultCode;
@@ -19,6 +20,7 @@ public class ClazzController {
      *
      * @param clazz
      */
+    @Authorization
     @PutMapping("/clazz")
     public Result addClazz(@RequestBody Clazz clazz) {
         if (clazzService.addClazz(clazz) == 1) {
@@ -35,6 +37,7 @@ public class ClazzController {
      * @param clazz
      * @return
      */
+    @Authorization
     @PostMapping("/clazz/{pageNum}/{pageSize}")
     public Result getClazz(@PathVariable int pageNum, @PathVariable int pageSize, @RequestBody(required = false) Clazz clazz) {
         return Result.success(clazzService.getClazzs(pageNum, pageSize, clazz), ResultCode.SUCCESS.getMsg());
@@ -46,6 +49,7 @@ public class ClazzController {
      * @param clazz
      * @return
      */
+    @Authorization
     @PatchMapping("/clazz")
     public Result updateClazz(@RequestBody Clazz clazz) {
         if (clazzService.updateClazz(clazz) == 1) {
@@ -60,6 +64,7 @@ public class ClazzController {
      * @param id
      * @return
      */
+    @Authorization
     @DeleteMapping("/clazz/{id}")
     public Result deleteClazz(@PathVariable Integer id) {
         if (clazzService.deleteClazz(id) == 1) {

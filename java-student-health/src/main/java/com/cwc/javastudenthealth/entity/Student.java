@@ -22,6 +22,7 @@ public class Student implements Serializable {
     private Integer cid;
     private String name;
     private LocalDateTime birth;
+    private Integer sex;
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
     @TableField(fill = FieldFill.UPDATE)

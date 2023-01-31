@@ -11,4 +11,5 @@ public interface UserService {
     int updateUser(User user);
 
     int deleteUserById(Integer id);
+
 }

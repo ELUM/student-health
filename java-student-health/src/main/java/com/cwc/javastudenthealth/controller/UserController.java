@@ -1,6 +1,7 @@
 package com.cwc.javastudenthealth.controller;
 
 import com.cwc.javastudenthealth.entity.User;
+import com.cwc.javastudenthealth.handler.Authorization;
 import com.cwc.javastudenthealth.service.UserService;
 import com.cwc.javastudenthealth.util.Result;
 import com.cwc.javastudenthealth.util.ResultCode;
@@ -19,6 +20,7 @@ public class UserController {
      *
      * @param user
      */
+    @Authorization
     @PutMapping("/user")
     public Result addUser(@RequestBody User user) {
         if (userService.addUser(user) == 1) {
@@ -34,6 +36,7 @@ public class UserController {
      * @param pageNum
      * @param pageSize
      */
+    @Authorization
     @PostMapping("/users/{pageNum}/{pageSize}")
     public Result getUsers(@PathVariable int pageNum, @PathVariable int pageSize, @RequestBody(required = false) User user) {
         return Result.success(userService.getUsers(pageNum, pageSize, user), ResultCode.SUCCESS.getMsg());
@@ -44,6 +47,7 @@ public class UserController {
      *
      * @param id
      */
+    @Authorization
     @DeleteMapping("/user/{id}")
     public Result deleteUserById(@PathVariable Integer id) {
         if (userService.deleteUserById(id) == 1) {
@@ -58,6 +62,7 @@ public class UserController {
      *
      * @param user
      */
+    @Authorization
     @PatchMapping("/user")
     public Result updateUser(@RequestBody User user) {
         if (userService.updateUser(user) == 1) {

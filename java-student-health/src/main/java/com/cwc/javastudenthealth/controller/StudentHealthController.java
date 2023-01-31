@@ -1,6 +1,7 @@
 package com.cwc.javastudenthealth.controller;
 
 import com.cwc.javastudenthealth.entity.StudentHealth;
+import com.cwc.javastudenthealth.handler.Authorization;
 import com.cwc.javastudenthealth.service.StudentHealthService;
 import com.cwc.javastudenthealth.util.Result;
 import com.cwc.javastudenthealth.util.ResultCode;
@@ -13,6 +14,7 @@ public class StudentHealthController {
     @Autowired
     StudentHealthService studentHealthService;
 
+    @Authorization
     @PutMapping("/studenthealth")
     public Result addStudentHealthService(@RequestBody StudentHealth studentHealth) {
         System.out.println(studentHealth);
@@ -22,11 +24,13 @@ public class StudentHealthController {
         return Result.failed(null, ResultCode.FAILED.getMsg());
     }
 
+    @Authorization
     @PostMapping("/studenthealth/{pageNum}/{pageSize}")
     public Result getStudentHealth(@PathVariable int pageNum, @PathVariable int pageSize, @RequestBody(required = false) StudentHealth studentHealth) {
         return Result.success(studentHealthService.getStudentHealths(pageNum, pageSize, studentHealth), ResultCode.SUCCESS.getMsg());
     }
 
+    @Authorization
     @PatchMapping("/studenthealth")
     public Result updateStudentHealth(@RequestBody StudentHealth studentHealth) {
         if (studentHealthService.updateStudentHealth(studentHealth) == 1) {
@@ -35,6 +39,7 @@ public class StudentHealthController {
         return Result.failed(null, ResultCode.FAILED.getMsg());
     }
 
+    @Authorization
     @DeleteMapping("/studenthealth/{id}")
     public Result deleteStudentHealth(@PathVariable Integer id) {
         if (studentHealthService.deleteStudentHealth(id) == 1) {
