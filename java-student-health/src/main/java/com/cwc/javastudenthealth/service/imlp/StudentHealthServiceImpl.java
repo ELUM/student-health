@@ -1,13 +1,13 @@
 package com.cwc.javastudenthealth.service.imlp;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cwc.javastudenthealth.entity.StudentHealth;
+import com.cwc.javastudenthealth.entity.vo.StudentHealthVO;
 import com.cwc.javastudenthealth.mapper.StudentHealthMapper;
 import com.cwc.javastudenthealth.service.StudentHealthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 @Service
 public class StudentHealthServiceImpl implements StudentHealthService {
@@ -20,14 +20,9 @@ public class StudentHealthServiceImpl implements StudentHealthService {
     }
 
     @Override
-    public Page<StudentHealth> getStudentHealths(int pageNum, int pageSize, StudentHealth studentHealth) {
-        Page<StudentHealth> page = new Page<>(pageNum, pageSize);
-        if (!ObjectUtils.isEmpty(studentHealth)) {
-            return studentHealthMapper.selectPage(page, new QueryWrapper<StudentHealth>()
-                    .like("sid", studentHealth.getSid())
-            );
-        }
-        return studentHealthMapper.selectPage(page, null);
+    public IPage<StudentHealthVO> getStudentHealths(int pageNum, int pageSize, String name) {
+        Page<StudentHealth> studentHealthPage = new Page<>(pageNum, pageSize);
+        return studentHealthMapper.getStudentHealth(studentHealthPage,name);
     }
 
     @Override

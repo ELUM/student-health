@@ -1,11 +1,12 @@
 <template>
-  <div :class="className" :style="{height:height,width:width}" />
+  <div :class="className" :style="{ height: height, width: width }" />
 </template>
 
 <script>
 import echarts from 'echarts'
 require('echarts/theme/macarons') // echarts theme
 import resize from './mixins/resize'
+import { getDateCount } from '@/api/echarts'
 
 const animationDuration = 6000
 
@@ -22,17 +23,18 @@ export default {
     },
     height: {
       type: String,
-      default: '300px'
+      default: '350px'
     }
   },
   data() {
     return {
-      chart: null
+      chart: null,
+      date: {}
     }
   },
   mounted() {
     this.$nextTick(() => {
-      this.initChart()
+      this.getDateByCount()
     })
   },
   beforeDestroy() {
@@ -43,6 +45,23 @@ export default {
     this.chart = null
   },
   methods: {
+    getDateByCount() {
+      getDateCount().then(res => {
+        let date = []
+        let count = []
+        for (const item of res.data) {
+          date.push(item.date)
+          count.push(item.count)
+        }
+        date.reverse()
+        count.reverse()
+        this.date = {
+          date,
+          count
+        }
+        this.initChart()
+      })
+    },
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
 
@@ -62,7 +81,7 @@ export default {
         },
         xAxis: [{
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: this.date.date,
           axisTick: {
             alignWithLabel: true
           }
@@ -74,25 +93,11 @@ export default {
           }
         }],
         series: [{
-          name: 'pageA',
+          name: '体测数据数量',
           type: 'bar',
           stack: 'vistors',
           barWidth: '60%',
-          data: [79, 52, 200, 334, 390, 330, 220],
-          animationDuration
-        }, {
-          name: 'pageB',
-          type: 'bar',
-          stack: 'vistors',
-          barWidth: '60%',
-          data: [80, 52, 200, 334, 390, 330, 220],
-          animationDuration
-        }, {
-          name: 'pageC',
-          type: 'bar',
-          stack: 'vistors',
-          barWidth: '60%',
-          data: [30, 52, 200, 334, 390, 330, 220],
+          data: this.date.count,
           animationDuration
         }]
       })

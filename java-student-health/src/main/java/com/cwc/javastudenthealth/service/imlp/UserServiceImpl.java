@@ -20,7 +20,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int addUser(User user) {
-        return userMapper.insert(user);
+        User user1 = userMapper.selectOne(new QueryWrapper<User>()
+                .eq("username", user.getUsername())
+                .eq("password", user.getPassword())
+        );
+        if (ObjectUtils.isEmpty(user1)) {
+            return userMapper.insert(user);
+        }
+        return 2;
     }
 
     @Override
@@ -41,6 +48,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int updateUser(User user) {
-        return userMapper.updateById(user);
+        User user1 = userMapper.selectOne(new QueryWrapper<User>()
+                .eq("username", user.getUsername())
+                .eq("password", user.getPassword())
+        );
+        if (ObjectUtils.isEmpty(user1)) {
+            return userMapper.updateById(user);
+        } else {
+            return 2;
+        }
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <div id="other" :style="{ height: '500px', width: '800px' }"></div>
+    <div id="other" :style="{ height: '250px', width: '500px' }"></div>
 </template>
 <script>
 import echarts from 'echarts'
@@ -32,7 +32,7 @@ export default {
             let times = []
 
             for (const iterator of this.data) {
-                vitalCapacity.push(Number.parseInt(iterator.vitalCapacity))
+                vitalCapacity.push(Number.parseFloat(iterator.vitalCapacity / 1000))
                 shortRun.push(Number.parseFloat(iterator.shortRun))
                 bodyFlexion.push(Number.parseFloat(iterator.bodyFlexion))
                 standJump.push(Number.parseFloat(iterator.standJump))

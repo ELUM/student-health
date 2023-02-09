@@ -23,7 +23,11 @@ public class UserController {
     @Authorization
     @PutMapping("/user")
     public Result addUser(@RequestBody User user) {
-        if (userService.addUser(user) == 1) {
+        int i = userService.addUser(user);
+        if (i == 2) {
+            return Result.base(ResultCode.ACCOUNT_EXIST.getCode(), ResultCode.ACCOUNT_EXIST.getMsg());
+        }
+        if (i == 1) {
             return Result.success(null, ResultCode.SUCCESS.getMsg());
         } else {
             return Result.failed(null, ResultCode.PARAMS_ERROR.getMsg());
@@ -65,7 +69,11 @@ public class UserController {
     @Authorization
     @PatchMapping("/user")
     public Result updateUser(@RequestBody User user) {
-        if (userService.updateUser(user) == 1) {
+        int i = userService.updateUser(user);
+        if (i == 2) {
+            return Result.base(ResultCode.ACCOUNT_EXIST.getCode(), ResultCode.ACCOUNT_EXIST.getMsg());
+        }
+        if (i == 1) {
             return Result.success(null, ResultCode.SUCCESS.getMsg());
         } else {
             return Result.failed(null, ResultCode.FAILED.getMsg());

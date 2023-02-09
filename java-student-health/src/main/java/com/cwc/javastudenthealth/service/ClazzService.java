@@ -3,6 +3,8 @@ package com.cwc.javastudenthealth.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cwc.javastudenthealth.entity.Clazz;
 
+import java.util.List;
+
 public interface ClazzService {
     /**
      * 添加班级
@@ -33,4 +35,6 @@ public interface ClazzService {
      * @return
      */
     int deleteClazz(Integer id);
+
+    List<Clazz> getClazzByName(String name);
 }

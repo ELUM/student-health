@@ -20,13 +20,10 @@
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <img :src="avatar" class="user-avatar">
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
-          <router-link to="/profile/index">
-            <el-dropdown-item>个人资料</el-dropdown-item>
-          </router-link>
           <router-link to="/">
             <el-dropdown-item>仪表盘</el-dropdown-item>
           </router-link>
@@ -60,9 +57,13 @@ export default {
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar',
       'device'
     ])
+  },
+  data() {
+    return {
+      avatar: require('@/assets/avatar.gif')
+    }
   },
   methods: {
     toggleSideBar() {

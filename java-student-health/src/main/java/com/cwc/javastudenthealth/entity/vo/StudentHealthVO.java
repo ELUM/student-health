@@ -1,25 +1,20 @@
-package com.cwc.javastudenthealth.entity;
+package com.cwc.javastudenthealth.entity.vo;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudentHealth implements Serializable {
-    @TableId(type = IdType.AUTO)
+public class StudentHealthVO {
     private Integer id;
-    private Integer sid;
+    private String name;
+    private Integer sex;
     // 肺活量
     private Integer vitalCapacity;
     // 50米
@@ -35,8 +30,6 @@ public class StudentHealth implements Serializable {
     private String height;
     private String weight;
     private String bmi;
-    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
-    @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
 }

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.util.List;
+
 @Service
 public class ClazzServiceImpl implements ClazzService {
 
@@ -40,4 +42,11 @@ public class ClazzServiceImpl implements ClazzService {
     public int deleteClazz(Integer id) {
         return clazzMapper.deleteById(id);
     }
+
+    @Override
+    public List<Clazz> getClazzByName(String name) {
+        return clazzMapper.selectList(new QueryWrapper<Clazz>().like("name",name));
+    }
+
+
 }

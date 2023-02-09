@@ -78,6 +78,19 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/user',
+    component: Layout,
+    redirect: '/user/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/user/index'),
+        name: 'User',
+        meta: { title: '用户管理', icon: 'el-icon-user', noCache: true }
+      }
+    ]
+  },
+  {
     path: '/student',
     component: Layout,
     redirect: '/student/index',
@@ -86,24 +99,36 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/student/index'),
         name: 'Student',
-        meta: { title: '学生管理', icon: 'el-icon-school', noCache: true }
+        meta: { title: '学生管理', icon: 'el-icon-s-custom', noCache: true }
       }
     ]
   },
-  // {
-  //   path: '/student',
-  //   component: Layout,
-  //   children: {
-  //     path: 'index',
-  //     component: () => import('@/views/dashboard/index'),
-  //     name: 'Student',
-  //     meta: {
-  //       title: '学生管理',
-  //       icon: 'dashboard',
-  //       affix: true
-  //     }
-  //   }
-  // },
+  {
+    path: '/clazz',
+    component: Layout,
+    redirect: '/clazz/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/clazz/index'),
+        name: 'Clazz',
+        meta: { title: '班级管理', icon: 'el-icon-school', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/health',
+    component: Layout,
+    redirect: '/health/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/health/index'),
+        name: 'Health',
+        meta: { title: '体测数据管理', icon: 'el-icon-tickets', noCache: true }
+      }
+    ]
+  },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

@@ -6,6 +6,7 @@
 import echarts from 'echarts'
 require('echarts/theme/macarons') // echarts theme
 import resize from './mixins/resize'
+import { getDateCount, getSexCount } from '@/api/echarts'
 
 export default {
   mixins: [resize],
@@ -33,7 +34,8 @@ export default {
   },
   data() {
     return {
-      chart: null
+      chart: null,
+      date: {}
     }
   },
   watch: {
@@ -46,7 +48,7 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      this.initChart()
+      this.getDateByCount()
     })
   },
   beforeDestroy() {
@@ -59,12 +61,29 @@ export default {
   methods: {
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
-      this.setOptions(this.chartData)
+      this.setOptions()
+    },
+    getDateByCount() {
+      getDateCount().then(res => {
+        let date = []
+        let count = []
+        for (const item of res.data) {
+          date.push(item.date)
+          count.push(item.count)
+        }
+        date.reverse()
+        count.reverse()
+        this.date = {
+          date,
+          count
+        }
+        this.initChart()
+      })
     },
     setOptions({ expectedData, actualData } = {}) {
       this.chart.setOption({
         xAxis: {
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: this.date.date,
           boundaryGap: false,
           axisTick: {
             show: false
@@ -90,26 +109,11 @@ export default {
           }
         },
         legend: {
-          data: ['expected', 'actual']
+          data: ['体测数据数量']
         },
-        series: [{
-          name: 'expected', itemStyle: {
-            normal: {
-              color: '#FF005A',
-              lineStyle: {
-                color: '#FF005A',
-                width: 2
-              }
-            }
-          },
-          smooth: true,
-          type: 'line',
-          data: expectedData,
-          animationDuration: 2800,
-          animationEasing: 'cubicInOut'
-        },
+        series: [
         {
-          name: 'actual',
+          name: '体测数据数量',
           smooth: true,
           type: 'line',
           itemStyle: {
@@ -124,7 +128,7 @@ export default {
               }
             }
           },
-          data: actualData,
+          data: this.date.count,
           animationDuration: 2800,
           animationEasing: 'quadraticOut'
         }]

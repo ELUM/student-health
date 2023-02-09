@@ -43,6 +43,12 @@ public class ClazzController {
         return Result.success(clazzService.getClazzs(pageNum, pageSize, clazz), ResultCode.SUCCESS.getMsg());
     }
 
+    @Authorization
+    @GetMapping("/clazz")
+    public Result getClazzByName(@RequestParam String name) {
+        return Result.success(clazzService.getClazzByName(name), ResultCode.SUCCESS.getMsg());
+    }
+
     /**
      * 更新班级信息
      *

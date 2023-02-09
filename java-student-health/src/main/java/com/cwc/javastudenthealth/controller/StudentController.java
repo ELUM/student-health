@@ -69,7 +69,8 @@ public class StudentController {
     @Authorization
     @DeleteMapping("/student/{id}")
     public Result deleteStudent(@PathVariable Integer id) {
-        if (studentService.deleteStudent(id) == 1) {
+        int i = studentService.deleteStudent(id);
+        if (i == 1) {
             return Result.success(null, ResultCode.SUCCESS.getMsg());
         }
         return Result.failed(null, ResultCode.FAILED.getMsg());

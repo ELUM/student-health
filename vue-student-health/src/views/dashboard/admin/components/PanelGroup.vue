@@ -7,9 +7,9 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            New Visits
+            用户数量
           </div>
-          <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="user" :duration="2600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -20,9 +20,9 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            Messages
+            学生数量
           </div>
-          <count-to :start-val="0" :end-val="81212" :duration="3000" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="student" :duration="3000" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -33,9 +33,9 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            Purchases
+            班级数量
           </div>
-          <count-to :start-val="0" :end-val="9280" :duration="3200" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="clazz" :duration="3200" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -46,9 +46,9 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            Shoppings
+            体测数据数量
           </div>
-          <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="health" :duration="3600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -57,14 +57,49 @@
 
 <script>
 import CountTo from 'vue-count-to'
+import { getUserCount, getStudentCount, getClazzCount, getHealthCount } from '@/api/echarts';
 
 export default {
   components: {
     CountTo
   },
+  data() {
+    return {
+      user: 0,
+      student: 0,
+      clazz: 0,
+      health: 0
+    }
+  },
+  mounted() {
+    this.getUserByCount()
+    this.getStudentByCount()
+    this.getClazzByCount()
+    this.getHealthByCount()
+  },
   methods: {
     handleSetLineChartData(type) {
       this.$emit('handleSetLineChartData', type)
+    },
+    getUserByCount() {
+      getUserCount().then(res => {
+        this.user = res.data
+      })
+    },
+    getStudentByCount() {
+      getStudentCount().then(res => {
+        this.student = res.data
+      })
+    },
+    getClazzByCount() {
+      getClazzCount().then(res => {
+        this.clazz = res.data
+      })
+    },
+    getHealthByCount() {
+      getHealthCount().then(res => {
+        this.health = res.data
+      })
     }
   }
 }
